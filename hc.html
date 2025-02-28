@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Hijab Couture</title>
+    <link rel="icon" href="logo.png" type="image/png">
+
+    <style>
+        /* General Styles */
+        @media (max-width: 600px) {
+            body {
+                font-size: 14px; /* Adjust font size for smaller screens */
+            }
+            .product {
+                width: 90%; /* Make products take more width on small screens */
+            }
+            .header {
+                flex-direction: column; /* Stack header elements on small screens */
+            }
+            .cart-btn {
+                margin-top: 10px; /* Add margin for better spacing */
+            }
+            .section {
+                padding: 30px 15px; /* Increase padding for better spacing */
+                margin: 10px auto; /* Adjust margin for sections */
+                max-width: 100%; /* Make sections full width on small screens */
+            }
+            .section-title {
+                font-size: 24px; /* Adjust section title size */
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            color: black;
+            text-align: center;
+        }
+
+        /* Header */
+        .header {
+            background-color: black;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+
+        .title {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .cart-btn {
+            background: white;
+            color: black;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .cart-btn span {
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 3px 8px;
+            font-size: 14px;
+            position: absolute;
+            top: -5px;
+            right: -10px;
+        }
+
+        /* Section Styling */
+        .section {
+            background-color: white;
+            padding: 40px 20px;
+            margin: 20px auto;
+            border-radius: 10px;
+            max-width: 1200px;
+            box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 26px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 3px solid black;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        /* Product Section */
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            gap: 15px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .product {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            width: 23%;
+            transition: 0.3s ease-in-out;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product img {
+            width: 100%;
+            height: 160px;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .product h2, .product p {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .product button {
+            background: black;
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+
+        .product button:hover {
+            background: gray;
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 1px solid black;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .cart-item button {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .cart-modal button {
+            margin-top: 10px;
+            background: black;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Footer Link Color Change */
+        footer a:visited {
+            color: blue; /* Change the color of the link to blue when clicked */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <img src="logo.png" alt="Logo" class="logo">
+        <h1 class="title">The Hijab Couture</h1>
+        <button class="cart-btn" onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</button>
+    </div>
+
+    <!-- Chiffon Hijabs Section -->
+    <div class="section">
+        <h2 class="section-title">Chiffon Hijabs</h2>
+        <div class="product-container">
+            <div class="product"><img src="black.jpg" alt="Hijab 1"><h2>Elegant Black Hijab</h2><p>Rs 600</p><button onclick="addToCart('Elegant Black Hijab', 600)">Add to Cart</button></div>
+            <div class="product"><img src="white.jpg" alt="Hijab 2"><h2>White Pearl Hijab</h2><p>Rs 600</p><button onclick="addToCart('White Pearl Hijab', 600)">Add to Cart</button></div>
+            <div class="product"><img src="lg.jpg" alt="Hijab 3"><h2>Light Gray Hijab</h2><p>Rs 600</p><button onclick="addToCart('Light Gray Hijab', 600)">Add to Cart</button></div>
+            <div class="product"><img src="mustard.jpg" alt="Hijab 4"><h2>Soft Mustard Hijab</h2><p>Rs 600</p><button onclick="addToCart('Soft Mustard Hijab', 600)">Add to Cart</button></div>
+            <div class="product"><img src="purple.jpg" alt="Hijab 5"><h2>Classic Purple Hijab</h2><p>Rs 600</p><button onclick="addToCart('Classic Purple Hijab', 600)">Add to Cart</button></div>
+            <div class="product"><img src="darkgreen.jpg" alt="Hijab 6"><h2>Dark Green Hijab</h2><p>Rs 600</p><button onclick="addToCart('Dark Green Hijab', 600)">Add to Cart</button></div>
+            <div class="product"><img src="lightpurple.jpg" alt="Hijab 7"><h2>Soft Purple Hijab</h2><p>Rs 600</p><button onclick="addToCart('Soft Purple Hijab', 600)">Add to Cart</button></div>
+            <div class="product"><img src="lightpink.jpg" alt="Hijab 8"><h2>Light Pink Hijab</h2><p>Rs 600</p><button onclick="addToCart('Light Pink Hijab', 600)">Add to Cart</button></div>
+            <div class="product"><img src="pastel.jpg" alt="Hijab 9"><h2>Elegant Pastel Hijab</h2><p>Rs 600</p><button onclick="addToCart('Elegant Pastel Hijab', 600)">Add to Cart</button></div>
+            <div class="product"><img src="navyblue.jpg" alt="Hijab 10"><h2>Navy Blue Hijab</h2><p>Rs 600</p><button onclick="addToCart('Navy Blue Hijab', 600)">Add to Cart</button></div>
+            <div class="product"><img src="red.jpg" alt="Hijab 11"><h2>Red Chiffon Hijab</h2><p>Rs 600</p><button onclick="addToCart('Red Chiffon Hijab', 600)">Add to Cart</button></div>
+            <div class="product"><img src="brown.jpg" alt="Hijab 12"><h2>Brown Chiffon Hijab</h2><p>Rs 600</p><button onclick="addToCart('Brown Chiffon Hijab', 600)">Add to Cart</button></div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Kids Under Hijab Caps</h2>
+        <div class="product-container">
+            <div class="product"><img src="bcap.jpg"><h2>Black Under Hijab Cap</h2><p>Rs 600</p><button onclick="addToCart('Black Under Hijab Cap', 600)">Add to Cart</button></div>
+            <div class="product"><img src="navycap.jpg"><h2>Navy Blue Under Hijab Cap</h2><p>Rs 600</p><button onclick="addToCart('Navy Blue Under Hijab Cap', 600)">Add to Cart</button></div>
+            <div class="product"><img src="w cap.jpg"><h2>White Under Hijab Cap</h2><p>Rs 600</p><button onclick="addToCart('White Under Hijab Cap', 600)">Add to Cart</button></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="section">
+        <h2 class="section-title">Makhna Hijabs</h2>
+        <div class="product-container">
+            <div class="product"><img src="mh1.webp"><h2>Makhna Black Hijab</h2><p>Rs 800</p><button onclick="addToCart('Makhna Elegant Hijab', 700)">Add to Cart</button></div>
+            <div class="product"><img src="mh2.webp"><h2>Makhna Dark Green Hijab</h2><p>Rs 800</p><button onclick="addToCart('Makhna Classic Hijab', 750)">Add to Cart</button></div>
+            <div class="product"><img src="mh3.webp"><h2>Makhna Maroon Hijab</h2><p>Rs 800</p><button onclick="addToCart('Makhna Stylish Hijab', 800)">Add to Cart</button></div>
+            <div class="product"><img src="mh4.webp"><h2>Makhna Light Grey Hijab</h2><p>Rs 800</p><button onclick="addToCart('Makhna Trendy Hijab', 850)">Add to Cart</button></div>
+            <div class="product"><img src="mh5.webp"><h2>Makhna White Hijab</h2><p>Rs 800</p><button onclick="addToCart('Makhna Floral Hijab', 900)">Add to Cart</button></div>
+            <div class="product"><img src="mh6.webp"><h2>Makhna Dark Brown Hijab</h2><p>Rs 800</p><button onclick="addToCart('Makhna Premium Hijab', 950)">Add to Cart</button></div>
+        </div>
+    </div>
+    <footer>
+        <div style="text-align: center; padding: 20px; background-color: #f1f1f1;">
+            <img src="logo.png" alt="Logo" style="width: 50px; height: auto;">
+            <div>
+                <a href="https://www.instagram.com/hijabcouture_official" target="_blank" style="text-decoration: none; color: black;">Click here to follow us on Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="cart-modal">
+        <h2>Your Cart</h2>
+        <div id="cart-items"></div>
+        <p>Total: Rs <span id="cart-total">0</span></p>
+        <button onclick="toggleCart()">Close</button>
+    </div>
+
+    <script>
+        let cart = [];
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function updateCart() {
+            let cartItemsDiv = document.getElementById("cart-items");
+            let cartCountSpan = document.getElementById("cart-count");
+            let cartTotalSpan = document.getElementById("cart-total");
+            cart.forEach((item, index) => {
+                total += item.price;
+                cartItemsDiv.innerHTML += `<div class="cart-item">
+                    ${item.name} - Rs ${item.price}
+                    <button onclick="removeFromCart(${index})">X</button>
+                </div>`;
+            });
+
+            cartCountSpan.innerText = cart.length;
+            cartTotalSpan.innerText = total;
+        }
+
+        function toggleCart() {
+            let modal = document.getElementById("cart-modal");
+            modal.style.display = (modal.style.display === "none" || modal.style.display === "") ? "block" : "none";
+        }
+    </script>
+
+</body>
+</html>
